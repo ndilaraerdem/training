@@ -15,6 +15,7 @@ import lombok.NoArgsConstructor;
 public class Product {
     @Column(name = "product_id")
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Short productId;  //erişim belirteci + tür + ismi
 
     @Column(name = "product_name")

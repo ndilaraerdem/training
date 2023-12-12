@@ -10,15 +10,14 @@ import org.springframework.stereotype.Service;
 @Service
 public class ProductManager implements ProductService
 {
+
     @Override
     public Product add(Product product) {
-        // ekleme işi için iş akışı
         return null;
     }
 
     @Override
-    public void delete(Short id)
-    {
+    public void delete(Short id) {
 
     }
 }

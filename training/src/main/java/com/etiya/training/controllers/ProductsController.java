@@ -2,6 +2,7 @@ package com.etiya.training.controllers;
 
 import com.etiya.training.entities.Product;
 import com.etiya.training.repositories.ProductRepository;
+import com.etiya.training.services.abstracts.ProductService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -10,38 +11,79 @@ import java.util.List;
 @RequestMapping("api/products") //localhost:8080/api/products
 public class ProductsController {
 
-    private final ProductRepository productRepository;
-    public  ProductsController(ProductRepository productRepository){
-        this.productRepository = productRepository;
+    // spring tarafından auto
+    // Dependency Injection her zaman soyut olmalı!
+
+    private final ProductService productService;
+
+    public ProductsController(ProductService productService) {
+        this.productService = productService;
     }
+
+
     @GetMapping
     public List<Product> getAll() {
 
-        return this.productRepository.findAll();
+        return null;
     }
     @GetMapping("{id}") // path variable
     public Product getById(@PathVariable Short id) {
-        return this.productRepository.findById(id).orElse(null);
+        return null;
     }
 
     @PostMapping
     public Product add(@RequestBody Product product)
     {
-        Product savedProduct = this.productRepository.save(product);
-        return savedProduct;
+        return null;
     }
 
     @DeleteMapping("{id}")
     public void delete(@PathVariable Short id) {
-        this.productRepository.deleteById(id);
+
     }
 
     @PutMapping
     public String update(@RequestBody Product product) {
         // Save methodu ilgili entitynin idsi var ise güncelleme, yok ise ekleme yapar.
-        this.productRepository.save(product);
         return "Put mapping çalışıyor..";
     }
+
+    //PART 2
+
+//    private final ProductRepository productRepository;
+//    public  ProductsController(ProductRepository productRepository){
+//        this.productRepository = productRepository;
+//    }
+//    @GetMapping
+//    public List<Product> getAll() {
+//
+//        return this.productRepository.findAll();
+//    }
+//    @GetMapping("{id}") // path variable
+//    public Product getById(@PathVariable Short id) {
+//        return this.productRepository.findById(id).orElse(null);
+//    }
+//
+//    @PostMapping
+//    public Product add(@RequestBody Product product)
+//    {
+//        return this.productRepository.save(product);
+//    }
+//
+//    @DeleteMapping("{id}")
+//    public void delete(@PathVariable Short id) {
+//        this.productRepository.deleteById(id);
+//    }
+//
+//    @PutMapping
+//    public String update(@RequestBody Product product) {
+//        // Save methodu ilgili entitynin idsi var ise güncelleme, yok ise ekleme yapar.
+//        this.productRepository.save(product);
+//        return "Put mapping çalışıyor..";
+//    }
+
+
+    // PART 1
 
 //    //localhost:8080/api/products GET
 //    @GetMapping("get1")
