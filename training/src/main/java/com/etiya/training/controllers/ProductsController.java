@@ -1,8 +1,9 @@
 package com.etiya.training.controllers;
 
 import com.etiya.training.entities.Product;
-import com.etiya.training.repositories.ProductRepository;
 import com.etiya.training.services.abstracts.ProductService;
+import com.etiya.training.services.dtos.product.AddProductRequest;
+import com.etiya.training.services.dtos.product.GetListProductResponse;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,9 +23,8 @@ public class ProductsController {
 
 
     @GetMapping
-    public List<Product> getAll() {
-
-        return null;
+    public List<GetListProductResponse> getAll() {
+        return productService.getAll();
     }
     @GetMapping("{id}") // path variable
     public Product getById(@PathVariable Short id) {
@@ -32,14 +32,14 @@ public class ProductsController {
     }
 
     @PostMapping
-    public Product add(@RequestBody Product product)
+    public Product add(@RequestBody AddProductRequest product)
     {
-        return null;
+        return productService.add(product);
     }
 
     @DeleteMapping("{id}")
     public void delete(@PathVariable Short id) {
-
+        this.productService.delete(id);
     }
 
     @PutMapping
