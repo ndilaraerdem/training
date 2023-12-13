@@ -162,4 +162,3 @@ DELETE from categories WHERE category_id = 1 -- Silinmez hata verir, Detail: Key
 Select * from categories WHERE deleted_date = NULL -- Silinmemiş verileri getir. (deleted_date alanı null ise bu veri silinmemiş demektir.)
 
 
-    S
