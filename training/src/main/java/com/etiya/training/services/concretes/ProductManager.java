@@ -37,7 +37,7 @@ public class ProductManager implements ProductService
         category.setCategoryId(request.getCategoryId());
         newProduct.setCategory(category);
 
-        return productRepository.save(newProduct);
+        return   productRepository.save(newProduct);
     }
 
     @Override
