@@ -1,15 +1,16 @@
 package com.etiya.training.services.concretes;
 
+import com.etiya.training.core.utils.exceptions.types.BusinessException;
 import com.etiya.training.entities.Category;
 import com.etiya.training.entities.Product;
-import com.etiya.training.repositories.CategoryRepository;
 import com.etiya.training.repositories.ProductRepository;
+import com.etiya.training.services.abstracts.CategoryService;
 import com.etiya.training.services.abstracts.ProductService;
 import com.etiya.training.services.dtos.product.AddProductRequest;
 import com.etiya.training.services.dtos.product.GetListProductResponse;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
@@ -17,26 +18,20 @@ import java.util.List;
 // class-class => extends
 // class-interface => implements
 @Service
+@AllArgsConstructor
 public class ProductManager implements ProductService
 {
-
     private final ProductRepository productRepository;
-    private final CategoryRepository categoryRepository;
-
-
-    public ProductManager(ProductRepository productRepository, CategoryRepository categoryRepository) {
-        this.productRepository = productRepository;
-        this.categoryRepository = categoryRepository;
-    }
+    private final CategoryService categoryService;
 
     @Override
     public Product add(AddProductRequest request) {
         //TODO: MANUEL MAPPINGI .stream ile düzelt
         //ekleme işi için iş akışı
         //dTo => Transfer => Mapping
-        Category category = categoryRepository.findById(request.getCategoryId())
-                .orElseThrow(()-> new RuntimeException("Verilen id ile bir kategori bulunamadı."));
+        Category category = this.throwExceptionIfCategoryNotExists(request.getCategoryId());
         Product newProduct = new Product();
+
         newProduct.setProductName(request.getProductName());
         newProduct.setQuantityPerUnit(request.getQuantityPerName());
         newProduct.setDiscontinued(request.getDiscontinued());
@@ -49,7 +44,7 @@ public class ProductManager implements ProductService
 
     @Override
     public void delete(Short id) {
-        Product productToDelete = this.productRepository.findById(id).orElseThrow(() -> new RuntimeException("Bu id ile bir ürün bulunamadı"));
+        Product productToDelete = this.productRepository.findById(id).orElseThrow(() -> new BusinessException("Bu id ile bir ürün bulunamadı"));
         this.productRepository.delete(productToDelete);
     }
 
@@ -90,6 +85,11 @@ public class ProductManager implements ProductService
 
     @Override
     public List<GetListProductResponse> getByName(String name) {
-        return productRepository.getByName(name);
+        return productRepository.getByName(name.toLowerCase());
+    }
+
+    private Category throwExceptionIfCategoryNotExists(Short id){
+        return categoryService.getById(id)
+                .orElseThrow(()-> new BusinessException("Verilen id ile bir kategori bulunamadı."));
     }
 }

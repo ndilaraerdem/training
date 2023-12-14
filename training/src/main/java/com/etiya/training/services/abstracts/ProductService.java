@@ -10,7 +10,7 @@ import java.util.List;
 // soyutlama burada yapılır. Manger olmak isteyen bir classın sorumlulukları burda tanımlanır.
 public interface ProductService
 {
-    Product add(AddProductRequest product);
+    Product  add(AddProductRequest product);
     void delete(Short id);
 
     List<GetListProductResponse> getAll();
