@@ -14,4 +14,5 @@ public interface ProductService
     void delete(Short id);
 
     List<GetListProductResponse> getAll();
+    List<GetListProductResponse> getByName(String name);
 }

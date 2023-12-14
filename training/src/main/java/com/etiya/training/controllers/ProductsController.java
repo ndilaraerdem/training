@@ -4,6 +4,7 @@ import com.etiya.training.entities.Product;
 import com.etiya.training.services.abstracts.ProductService;
 import com.etiya.training.services.dtos.product.AddProductRequest;
 import com.etiya.training.services.dtos.product.GetListProductResponse;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,12 +28,12 @@ public class ProductsController {
         return productService.getAll();
     }
     @GetMapping("{id}") // path variable
-    public Product getById(@PathVariable Short id) {
+    public Product getById(@PathVariable @Valid Short id) {
         return null;
     }
 
     @PostMapping
-    public Product add(@RequestBody AddProductRequest product)
+    public Product add(@RequestBody @Valid AddProductRequest product)
     {
         return productService.add(product);
     }
@@ -48,6 +49,10 @@ public class ProductsController {
         return "Put mapping çalışıyor..";
     }
 
+    @GetMapping("search") // path variable
+    public List<GetListProductResponse> search (@RequestParam String name) {
+        return productService.getByName(name);
+    }
     //PART 2
 
 //    private final ProductRepository productRepository;
